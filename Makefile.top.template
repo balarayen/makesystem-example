@@ -1,0 +1,14 @@
+TOPTARGETS := all clean_all
+
+SUBDIRS := $(wildcard */.)
+
+$(TOPTARGETS): $(SUBDIRS)
+
+$(SUBDIRS):
+	@if [ -f $@/Makefile ]; \
+        then \
+        $(MAKE) -C $@ $(MAKECMDGOALS); \
+        fi;
+
+.PHONY: $(TOPTARGETS) $(SUBDIRS)
+
