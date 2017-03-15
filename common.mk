@@ -8,9 +8,10 @@
 
 CC := g++
 
+ROOTDIR := ../..
 SRCDIR := .
 MODULENAME := $(shell basename $(PWD))
-DISTDIR := ../../dist/$(MODULENAME)
+DISTDIR := $(ROOTDIR)/dist/$(MODULENAME)
 
 ifeq ($(BIN_TARGET),TRUE)
 	TARGETDIR := $(DISTDIR)/bin
@@ -23,7 +24,7 @@ endif
 
 TARGET := $(TARGETDIR)/$(EXECUTABLE)
 
-INSTALLDIR := ../../demo
+INSTALLDIR := $(ROOTDIR)/package
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
@@ -40,22 +41,19 @@ CFLAGS := -c
 CFLAGS += -O2
 
 $(TARGET): $(OBJECTS)
-	@echo $^
 ifeq ($(BIN_TARGET),TRUE)
-ifneq ($^,)
+ifneq ($(OBJECTS),)
 	@mkdir -pv $(TARGETDIR)
 	@echo "Linking..."
 	@echo "  Linking $(TARGET)"; $(CC) $^ -o $@ $(LIB)
 endif
 else
-ifneq ($^,)
+ifneq ($(OBJECTS),)
 	@mkdir -pv $(TARGETDIR)
 	@echo "Archiving..."
 	@echo "  Archiving $(TARGET)"; $(CC) -shared $^ -o $@
 endif
 endif
-
-all: local
 
 local: $(TARGET)
 
@@ -68,21 +66,18 @@ else
 endif
 	@echo "Compiling $<..."; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
-clean_all: local_clean
-
-local_clean: distclean
-
-distclean:
+clean:
 	@echo "Cleaning $(TARGET)..."; $(RM) -r $(DISTDIR) $(TARGET)
 
 install:
 	@mkdir -pv $(INSTALLDIR)
 	@echo "Installing $(EXECUTABLE)"; cp $(TARGET) $(INSTALLDIR)
 
-clean:
+uninstall:
 	@echo "Removing $(EXECUTABLE)"; $(RM) $(INSTALLDIR)/$(EXECUTABLE)
 
-.PHONY: all
 .PHONY: local
 .PHONY: clean
+.PHONY: install
+.PHONY: uninstall
 
