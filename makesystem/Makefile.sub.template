@@ -1,0 +1,19 @@
+# Makefile.sub.template
+#
+# Copyright (C) 2017, Makesystem, Balamurugan Souppourayen
+#
+# This software may be modified and distributed under the terms
+# of the MIT license.  See the LICENSE file for details.
+#
+
+
+# To generate a binary
+# comment this line if LIB_TARGET is enabled
+
+include ../../makesystem/COMMON_BIN_TARGET.mk
+
+
+# To generate a shared library
+#
+# include ../../makesystem/COMMON_BIN_TARGET.mk
+
