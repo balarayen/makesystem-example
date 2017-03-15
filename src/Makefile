@@ -6,7 +6,7 @@
 # of the MIT license.  See the LICENSE file for details.
 #
 
-TOPTARGETS := all clean_all
+TOPTARGETS := local clean install uninstall
 
 SUBDIRS := $(wildcard */.)
 
@@ -15,7 +15,7 @@ $(TOPTARGETS): $(SUBDIRS)
 $(SUBDIRS):
 	@if [ -f $@/Makefile ]; \
         then \
-        $(MAKE) -C $@ $(MAKECMDGOALS); \
+        cd $@ && $(MAKE) $(MAKECMDGOALS); \
         fi;
 
 .PHONY: $(TOPTARGETS) $(SUBDIRS)
