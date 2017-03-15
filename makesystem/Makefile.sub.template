@@ -16,4 +16,4 @@ include ../../makesystem/COMMON_BIN_TARGET.mk
 # To generate a shared library
 #
 # include ../../makesystem/COMMON_BIN_TARGET.mk
-
+#
